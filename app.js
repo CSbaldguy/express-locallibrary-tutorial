@@ -48,4 +48,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// https://stackoverflow.com/questions/19371821/do-i-need-to-manually-close-a-mongoose-connection
+// close the Mongoose connection properly when terminate
+process.on('SIGINT', function() {
+  mongoose.disconnect(function () {
+    console.log('Mongoose disconnected on app termination');
+    process.exit(0);
+  });
+});
+
 module.exports = app;
