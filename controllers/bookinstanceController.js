@@ -84,7 +84,7 @@ exports.bookinstance_create_post = [
 ];
 
 // Display BookInstance delete form on GET.
-exports.bookinstance_delete_get = (req, res) => {
+exports.bookinstance_delete_get = (req, res, next) => {
     BookInstance.findById(req.params.id)
         .populate('book')
         .exec(function(err, result) {
@@ -97,7 +97,7 @@ exports.bookinstance_delete_get = (req, res) => {
 };
 
 // Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = (req, res) => {
+exports.bookinstance_delete_post = (req, res, next) => {
     BookInstance.findByIdAndRemove(req.body.bookinstanceid, function (err, result) {
         if (err) { return next(err); }
         res.redirect('/catalog/bookinstances');
@@ -105,7 +105,7 @@ exports.bookinstance_delete_post = (req, res) => {
 };
 
 // Display BookInstance update form on GET.
-exports.bookinstance_update_get = (req, res) => {
+exports.bookinstance_update_get = (req, res, next) => {
     async.parallel({
         bookinstance: function(callback) {
             BookInstance.findById(req.params.id, callback);
